@@ -35,7 +35,6 @@ jobs:
       name: Build & push Docker image
       with:
         image: howaboutwepullsomeimages/demo-musician
-        tags: v1, latest
         registry: registry-url.io
         username: ${{ secrets.DOCKER_USERNAME.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_USERNAME.DOCKER_PASSWORD }}
