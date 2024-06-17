@@ -28,23 +28,14 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
-
-    -
-        name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-    -
-        name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-    -
-        name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKER_USERNAME.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKER_USERNAME.DOCKERHUB_PASSWORD }}
-    -
-        name: Build and push
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: howaboutwepullsomeimages/demo-musician
+    - uses: actions/checkout@v3
+      name: Check out code
+  
+    - uses: mr-smithers-excellent/docker-build-push@v6
+      name: Build & push Docker image
+      with:
+        image: howaboutwepullsomeimages/demo-musician
+        tags: v1, latest
+        registry: registry-url.io
+        username: ${{ secrets.DOCKER_USERNAME.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_USERNAME.DOCKER_PASSWORD }}
